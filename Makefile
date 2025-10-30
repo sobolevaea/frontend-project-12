@@ -17,7 +17,8 @@ start:
 	make start-backend
 
 develop:
-	make start-backend & make start-frontend
+	make start-backend
+# 	make start-backend & make start-frontend
 
 build:
 # пока непрянятно зачем
