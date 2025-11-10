@@ -17,7 +17,8 @@ const LoginForm = () => {
   const [error, setError] = useState('')
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const isAuth = useSelector(state => state.authReducer.isAuth)
+  const isAuth = useSelector(state => state.auth.isAuth)
+  const chat = useSelector(state => state.chat)
 
   const onSubmit = async (values) => {
     try {
@@ -26,9 +27,7 @@ const LoginForm = () => {
       localStorage.setItem('token', token)
       localStorage.setItem('username', username)
       dispatch(authActions.login())
-      if (isAuth) {
-        navigate('/')
-      }
+      navigate('/')
     }
     catch {
       setError('Неверный логин или пароль')
