@@ -1,13 +1,20 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import { Provider } from 'react-redux'
-import store from './slices/index.js'
-import App from './App.jsx'
+import initApp from './init.jsx'
 
-createRoot(document.getElementById('chat')).render(
-  <Provider store={store}>
+// отсюда передаем сокет в инит
+// сюда передаем из init
+// функция будет асинхронной
+
+const runApp = async () => {
+  const app = await initApp()
+  createRoot(document.getElementById('chat')).render(
     <StrictMode>
-      <App />
+      {app}
     </StrictMode>
-  </Provider>,
-)
+  )
+}
+
+runApp()
+
+

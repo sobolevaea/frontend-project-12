@@ -1,20 +1,19 @@
+import { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import { useFormik } from 'formik'
 import { object, string } from 'yup'
 import axios from 'axios'
-import { useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
-import { useSelector } from 'react-redux'
-import { actions as authActions } from '../slices/authSlice.js'
-import { useState } from 'react'
 import cn from 'classnames'
+import { actions as authActions } from '../store/authSlice.js'
 
 const loginSchema = object({
   username: string().required(),
   password: string().required(),
 })
 
-const LoginForm = () => {
-  const [error, setError] = useState('')
+const LoginPage = () => {
+  const [error, setError] = useState(null)
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const isAuth = useSelector(state => state.auth.isAuth)
@@ -61,12 +60,4 @@ const LoginForm = () => {
   )
 }
 
-const BuildLoginPage = () => {
-  return (
-    <div className="card-body row p-5">
-      <LoginForm />
-    </div>
-  )
-}
-
-export const LoginPage = () => BuildLoginPage()
+export default LoginPage

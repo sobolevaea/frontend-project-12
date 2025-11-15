@@ -1,15 +1,16 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { Page404 } from './components/404.jsx'
-import { ChatPage } from './components/ChatPage.jsx'
-import { LoginPage } from './components/LoginPage.jsx'
+import NotFoundPage from './components/NotFoundPage.jsx'
+import MainPage from './components/MainPage.jsx'
+import LoginPage from './components/LoginPage.jsx'
+import AuthWrapper from './components/AuthWrapper.jsx'
 
-function App() {
+const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="*" element={<Page404 />} />
-        <Route path="/" element={<ChatPage />} />
-        <Route path="login" element={<LoginPage />} />
+        <Route path="*" element={<NotFoundPage />} />
+        <Route path="/" element={<MainPage />} />
+        <Route path="login" element={<AuthWrapper><LoginPage /></AuthWrapper>} />
       </Routes>
     </BrowserRouter>
   )
