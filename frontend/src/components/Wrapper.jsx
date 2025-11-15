@@ -6,6 +6,6 @@ const Wrapper = ({ isLoading, children }) => (
   <div className={wrapperClass}>
     {isLoading ? <Loader /> : children}
   </div>
-);
+)
 
 export default Wrapper

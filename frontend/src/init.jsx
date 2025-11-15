@@ -10,7 +10,7 @@ import App from './App.jsx'
 const initApp = () => {
   return (
     <Provider store={store}>
-        <App />
+      <App />
     </Provider>
   )
 }

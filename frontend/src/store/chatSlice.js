@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit'
 // import { fetchChannelsAndMessages } from './channelsApi';
 
 const chatSlice = createSlice({
@@ -27,6 +27,6 @@ const chatSlice = createSlice({
   //       state.error = action.payload;
   //     });
   // },
-});
+})
 
-export default chatSlice.reducer;
+export default chatSlice.reducer

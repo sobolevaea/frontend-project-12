@@ -18,7 +18,9 @@ const AuthWrapper = ({ children }) => {
               </div>
               <div className="card-footer p-4">
                 <div className="text-center">
-                  <span>Нет аккаунта?</span> <a href="/signup">Регистрация</a>
+                  <span>Нет аккаунта?</span>
+                  {' '}
+                  <a href="/signup">Регистрация</a>
                 </div>
               </div>
             </div>

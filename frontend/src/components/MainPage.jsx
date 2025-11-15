@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom'
-import { useFormik } from 'formik';
+import { useFormik } from 'formik'
 import cn from 'classnames'
-import { useGetChannels } from '../store/channelsApi.js';
+import { useGetChannels } from '../store/channelsApi.js'
 import { useGetMessages, useAddMessage } from '../store/messagesApi.js'
 import Wrapper from './Wrapper.jsx'
 
@@ -11,22 +10,28 @@ const RenderChannels = ({ children, handler, id }) => {
   const setActiveChannelId = handler
   const activeChannelId = id
 
-  return children.map((channel) => (
+  return children.map(channel => (
     <li className="nav-item w-100" key={channel.id}>
-      <button type="button" className={cn('w-100', 'rounded-0', 'text-start', 'btn', {
-        'btn-secondary': channel.id === activeChannelId,
-      })} onClick={() => setActiveChannelId(channel.id)}>
-        <span className="me-1">#</span>{channel.name}
+      <button
+        type="button"
+        className={cn('w-100', 'rounded-0', 'text-start', 'btn', {
+          'btn-secondary': channel.id === activeChannelId,
+        })}
+        onClick={() => setActiveChannelId(channel.id)}
+      >
+        <span className="me-1">#</span>
+        {channel.name}
       </button>
     </li>
   ))
 }
 
 const RenderMessages = ({ children }) => {
-  console.log(children)
-  return children.map((message) => (
+  return children.map(message => (
     <div className="text-break mb-2" key={message.id}>
-      <b>admin</b>: {message.body}
+      <b>admin</b>
+      :
+      {message.body}
     </div>
   ))
 }
@@ -36,7 +41,7 @@ const ChatPage = () => {
   const { data: messages, isLoading: isMessagesLoading } = useGetMessages()
 
   const [activeChannelId, setActiveChannelId] = useState(null)
-  const activeChannel = channels?.find(c => c.id === activeChannelId);
+  const activeChannel = channels?.find(c => c.id === activeChannelId)
   const activeChannelName = activeChannel?.name
   useEffect(() => {
     if (channels && channels.length > 0 && activeChannelId === null) {
@@ -65,15 +70,15 @@ const ChatPage = () => {
   })
 
   return (
-      <div className='h-100'>
-        <div className="d-flex flex-column h-100">
-          <nav className="shadow-sm navbar navbar-expand-lg navbar-light bg-white">
-            <div className="container">
-              <a className="navbar-brand" href="/">Hexlet Chat</a>
-              <button type="button" className="btn btn-primary">Выйти</button>
-            </div>
-          </nav>
-          <Wrapper isLoading={isMessagesLoading || isChannelsLoading}>
+    <div className="h-100">
+      <div className="d-flex flex-column h-100">
+        <nav className="shadow-sm navbar navbar-expand-lg navbar-light bg-white">
+          <div className="container">
+            <a className="navbar-brand" href="/">Hexlet Chat</a>
+            <button type="button" className="btn btn-primary">Выйти</button>
+          </div>
+        </nav>
+        <Wrapper isLoading={isMessagesLoading || isChannelsLoading}>
           <div className="container h-100 my-4 overflow-hidden rounded shadow">
             <div className="row h-100 bg-white flex-md-row">
               <div className="col-4 col-md-2 border-end px-0 bg-light flex-column h-100 d-flex">
@@ -97,7 +102,10 @@ const ChatPage = () => {
                 <div className="d-flex flex-column h-100">
                   <div className="bg-light mb-4 p-3 shadow-sm small">
                     <p className="m-0">
-                      <b># {activeChannelName}</b>
+                      <b>
+                        #
+                        {activeChannelName}
+                      </b>
                     </p>
                     <span className="text-muted">0 сообщений</span>
                   </div>
@@ -122,10 +130,10 @@ const ChatPage = () => {
               </div>
             </div>
           </div>
-          </Wrapper>
-        </div>
+        </Wrapper>
       </div>
-    
+    </div>
+
   )
 }
 

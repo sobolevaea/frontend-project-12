@@ -11,10 +11,8 @@ const runApp = async () => {
   createRoot(document.getElementById('chat')).render(
     <StrictMode>
       {app}
-    </StrictMode>
+    </StrictMode>,
   )
 }
 
 runApp()
-
-

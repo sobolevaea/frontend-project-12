@@ -1,8 +1,8 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { createSelector } from '@reduxjs/toolkit';
-import routes from '../../routes.js';
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { createSelector } from '@reduxjs/toolkit'
+import routes from '../../routes.js'
 // import { selectCurrentChannelId } from 'redux/slices/uiSelectors';
-import { prepareHeaders } from './helpers';
+import { prepareHeaders } from './helpers'
 
 const baseQuery = fetchBaseQuery({
   baseUrl: routes.channelsPath(),
@@ -13,9 +13,9 @@ const channelsApi = createApi({
   reducerPath: 'channelsApi',
   baseQuery,
   tagTypes: ['Channels', 'Messages'],
-  endpoints: (builder) => ({
+  endpoints: builder => ({
     addChannel: builder.mutation({
-      query: (channel) => ({
+      query: channel => ({
         method: 'POST',
         body: channel,
       }),
@@ -33,26 +33,26 @@ const channelsApi = createApi({
         method: 'DELETE',
         invalidatesTags: ['Messages', 'Channels'],
       }),
-      transformResponse: (response) => ({ ...response }),
+      transformResponse: response => ({ ...response }),
     }),
     getChannels: builder.query({
       query: () => '',
       providesTags: ['Channels'],
     }),
   }),
-});
+})
 
-const selectChannels = channelsApi.endpoints.getChannels.select();
+const selectChannels = channelsApi.endpoints.getChannels.select()
 
 const selectChannelsData = createSelector(
   selectChannels,
-  (channelsState) => channelsState.data ?? [],
-);
+  channelsState => channelsState.data ?? [],
+)
 
 export const selectChannelsNames = createSelector(
   selectChannelsData,
-  (channels) => channels.map(({ name }) => name),
-);
+  channels => channels.map(({ name }) => name),
+)
 
 // export const selectCurrentChannel = createSelector(
 //   [selectChannelsData, selectCurrentChannelId],
@@ -66,6 +66,6 @@ export const {
   useAddChannelMutation: useAddChannel,
   useUpdateChannelMutation: useUpdateChannel,
   useDeleteChannelMutation: useDeleteChannel,
-} = channelsApi;
+} = channelsApi
 
-export default channelsApi;
+export default channelsApi

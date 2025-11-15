@@ -1,9 +1,9 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { createSelector } from '@reduxjs/toolkit';
-import routes from '../../routes.js';
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { createSelector } from '@reduxjs/toolkit'
+import routes from '../../routes.js'
 // создать для сообщений
 // import { selectCurrentMessageId } from 'redux/slices/uiSelectors';
-import { prepareHeaders } from './helpers';
+import { prepareHeaders } from './helpers'
 
 const baseQuery = fetchBaseQuery({
   baseUrl: routes.messagesPath(),
@@ -14,9 +14,9 @@ const messagesApi = createApi({
   reducerPath: 'messagesApi',
   baseQuery,
   tagTypes: ['Channels', 'Messages'],
-  endpoints: (builder) => ({
+  endpoints: builder => ({
     addMessage: builder.mutation({
-      query: (message) => ({
+      query: message => ({
         method: 'POST',
         body: message,
       }),
@@ -34,26 +34,26 @@ const messagesApi = createApi({
         method: 'DELETE',
         invalidatesTags: ['Messages', 'Channels'],
       }),
-      transformResponse: (response) => ({ ...response }),
+      transformResponse: response => ({ ...response }),
     }),
     getMessages: builder.query({
       query: () => '',
       providesTags: ['Messages'],
     }),
   }),
-});
+})
 
-const selectMessages = messagesApi.endpoints.getMessages.select();
+const selectMessages = messagesApi.endpoints.getMessages.select()
 
 const selectMessagesData = createSelector(
   selectMessages,
-  (messagesState) => messagesState.data ?? [],
-);
+  messagesState => messagesState.data ?? [],
+)
 
 export const selectMessagesNames = createSelector(
   selectMessagesData,
-  (messages) => messages.map(({ name }) => name),
-);
+  messages => messages.map(({ name }) => name),
+)
 
 // export const selectCurrentMessage = createSelector(
 //   [selectMessagesData, selectCurrentMessageId],
@@ -67,6 +67,6 @@ export const {
   useAddMessageMutation: useAddMessage,
   useUpdateMessageMutation: useUpdateMessage,
   useDeleteMessageMutation: useDeleteMessage,
-} = messagesApi;
+} = messagesApi
 
-export default messagesApi;
+export default messagesApi

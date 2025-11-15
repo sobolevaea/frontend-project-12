@@ -16,20 +16,20 @@ const LoginPage = () => {
   const [error, setError] = useState(null)
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const isAuth = useSelector(state => state.auth.isAuth)
-  const chat = useSelector(state => state.chat)
 
   const onSubmit = async (values) => {
     try {
       const response = await axios.post('/api/v1/login', values)
       const { token, username } = response.data
+      console.log(`data: ${username}`)
       localStorage.setItem('token', token)
       localStorage.setItem('username', username)
       dispatch(authActions.login())
       navigate('/')
     }
-    catch {
+    catch (e) {
       setError('Неверный логин или пароль')
+      console.log(e)
     }
   }
 
