@@ -1,7 +1,7 @@
+import cn from 'classnames'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useFormik } from 'formik'
-import cn from 'classnames'
 import { useGetChannels } from '../store/channelsApi.js'
 import { useGetMessages, useAddMessage } from '../store/messagesApi.js'
 import Wrapper from './Wrapper.jsx'
@@ -36,13 +36,16 @@ const RenderMessages = ({ children }) => {
   ))
 }
 
-const ChatPage = () => {
+const MainPage = () => {
+  const [addMessage] = useAddMessage()
+
   const { data: channels, isLoading: isChannelsLoading } = useGetChannels()
   const { data: messages, isLoading: isMessagesLoading } = useGetMessages()
 
   const [activeChannelId, setActiveChannelId] = useState(null)
   const activeChannel = channels?.find(c => c.id === activeChannelId)
   const activeChannelName = activeChannel?.name
+
   useEffect(() => {
     if (channels && channels.length > 0 && activeChannelId === null) {
       setActiveChannelId(channels[0].id)
@@ -57,7 +60,7 @@ const ChatPage = () => {
     }
   }, [navigate])
 
-  const [addMessage] = useAddMessage()
+
 
   const onSubmit = (body) => {
     addMessage(body)
@@ -137,4 +140,4 @@ const ChatPage = () => {
   )
 }
 
-export default ChatPage
+export default MainPage
