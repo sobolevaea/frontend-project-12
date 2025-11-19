@@ -1,8 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { createSelector } from '@reduxjs/toolkit'
 import routes from '../../routes.js'
-// создать для сообщений
-// import { selectCurrentMessageId } from 'redux/slices/uiSelectors';
+import { selectCurrentChannelId } from './uiSlice.js'
 import { prepareHeaders } from './helpers'
 
 const baseQuery = fetchBaseQuery({
@@ -55,12 +54,12 @@ export const selectMessagesNames = createSelector(
   messages => messages.map(({ name }) => name),
 )
 
-// export const selectCurrentMessage = createSelector(
-//   [selectMessagesData, selectCurrentMessageId],
-//   (messages, currentMessageId) => (
-//     messages.find((message) => message.id === currentMessageId) || null
-//   ),
-// );
+export const selectCurrentMessages = createSelector(
+  [selectMessagesData, selectCurrentChannelId],
+  (messages, currentChannelId) => (
+    messages.filter(message => message.channelId === currentChannelId) || null
+  ),
+)
 
 export const {
   useGetMessagesQuery: useGetMessages,

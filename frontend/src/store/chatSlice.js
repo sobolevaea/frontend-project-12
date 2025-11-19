@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit'
-// import { fetchChannelsAndMessages } from './channelsApi';
 
 const chatSlice = createSlice({
   name: 'chat',

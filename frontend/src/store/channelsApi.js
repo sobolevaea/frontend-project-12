@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { createSelector } from '@reduxjs/toolkit'
 import routes from '../../routes.js'
-// import { selectCurrentChannelId } from 'redux/slices/uiSelectors';
+import { selectCurrentChannelId } from './uiSlice.js'
 import { prepareHeaders } from './helpers'
 
 const baseQuery = fetchBaseQuery({
@@ -54,12 +54,12 @@ export const selectChannelsNames = createSelector(
   channels => channels.map(({ name }) => name),
 )
 
-// export const selectCurrentChannel = createSelector(
-//   [selectChannelsData, selectCurrentChannelId],
-//   (channels, currentChannelId) => (
-//     channels.find((channel) => channel.id === currentChannelId) || null
-//   ),
-// );
+export const selectCurrentChannel = createSelector(
+  [selectChannelsData, selectCurrentChannelId],
+  (channels, currentChannelId) => (
+    channels.find(channel => channel.id === currentChannelId) || null
+  ),
+)
 
 export const {
   useGetChannelsQuery: useGetChannels,
