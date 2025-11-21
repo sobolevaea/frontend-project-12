@@ -56,6 +56,9 @@ const ModalUniversal = ({ show, onHide, type, channel }) => {
   const handleRemove = async () => {
     try {
       await removeChannel({ id: channel.id })
+      if (channel.id === currentChannelId) {
+        dispatch(setCurrentChannel({ id: defaultChannelId }))
+      }
       onHide()
     }
     catch (error) {
@@ -89,7 +92,6 @@ const ModalUniversal = ({ show, onHide, type, channel }) => {
     <Modal
       show={show}
       onHide={onHide}
-      size="lg"
       aria-labelledby="contained-modal-title-vcenter"
       centered
     >
@@ -100,56 +102,52 @@ const ModalUniversal = ({ show, onHide, type, channel }) => {
       </Modal.Header>
 
       <Modal.Body>
-        {type === 'remove' ? (
-          // Контент для удаления
-          <div>
-            <p>
-              Вы уверены, что хотите удалить канал
-              <strong>
-                "
-                {channel?.name}
-                "
-              </strong>
-              ?
-            </p>
-            <div className="d-flex justify-content-end">
-              <Button variant="secondary" className="me-2" onClick={onHide}>
-                Отменить
-              </Button>
-              <Button variant="danger" onClick={handleRemove}>
-                Удалить
-              </Button>
-            </div>
-          </div>
-        ) : (
-          // Контент для добавления/переименования
-          <form onSubmit={formik.handleSubmit}>
-            <div>
-              <input
-                name="name"
-                id="name"
-                className={inputClass}
-                onChange={formik.handleChange}
-                value={formik.values.name} // Исправлено: было values.body
-                autoFocus
-              />
-              <label className="visually-hidden" htmlFor="name">
-                Имя канала
-              </label>
-              {formik.errors.name && (
-                <div className="invalid-feedback">{formik.errors.name}</div>
-              )}
-              <div className="d-flex justify-content-end">
-                <Button variant="secondary" className="me-2" onClick={onHide}>
-                  Отменить
-                </Button>
-                <Button variant="primary" type="submit">
-                  {getSubmitButtonText()}
-                </Button>
+        {type === 'remove'
+          ? (
+        // Контент для удаления
+              <div>
+                <p className="lead">
+                  Уверены?
+                </p>
+                <div className="d-flex justify-content-end">
+                  <Button variant="secondary" className="me-2" onClick={onHide}>
+                    Отменить
+                  </Button>
+                  <Button variant="danger" onClick={handleRemove}>
+                    Удалить
+                  </Button>
+                </div>
               </div>
-            </div>
-          </form>
-        )}
+            )
+          : (
+        // Контент для добавления/переименования
+              <form onSubmit={formik.handleSubmit}>
+                <div>
+                  <input
+                    name="name"
+                    id="name"
+                    className={inputClass}
+                    onChange={formik.handleChange}
+                    value={formik.values.name} // Исправлено: было values.body
+                    autoFocus
+                  />
+                  <label className="visually-hidden" htmlFor="name">
+                    Имя канала
+                  </label>
+                  {formik.errors.name && (
+                    <div className="invalid-feedback">{formik.errors.name}</div>
+                  )}
+                  <div className="d-flex justify-content-end">
+                    <Button variant="secondary" className="me-2" onClick={onHide}>
+                      Отменить
+                    </Button>
+                    <Button variant="primary" type="submit">
+                      {getSubmitButtonText()}
+                    </Button>
+                  </div>
+                </div>
+              </form>
+            )}
       </Modal.Body>
     </Modal>
   )

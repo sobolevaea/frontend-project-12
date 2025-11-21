@@ -8,10 +8,6 @@ import store from './store/index.js'
 import App from './App.jsx'
 import channelsApi from './store/channelsApi.js'
 import messagesApi from './store/messagesApi.js'
-import { useSelector } from 'react-redux'
-import { selectCurrentChannelId, selectDefaultChannelId, setCurrentChannel } from './store/uiSlice.js'
-// import { useAddMessage } from './store/messagesApi.js'
-// import { useAddChannel } from './store/channelsApi.js'
 
 const initApp = (socket) => {
   const listenerNewMessage = (payload) => {
@@ -39,11 +35,6 @@ const initApp = (socket) => {
   }
 
   const listenerRemoveChannel = (payload) => {
-    const state = store.getState()
-    const currentChannelId = selectCurrentChannelId()
-    console.log(currentChannelId)
-    const defaultChannelId = selectDefaultChannelId()
-
     store.dispatch(
       channelsApi.util.updateQueryData(
         'getChannels',
@@ -56,7 +47,6 @@ const initApp = (socket) => {
         },
       ),
     )
-
     store.dispatch(
       messagesApi.util.updateQueryData(
         'getMessages',
@@ -66,10 +56,6 @@ const initApp = (socket) => {
         },
       ),
     )
-
-    if (currentChannelId === payload.id) {
-      store.dispatch(setCurrentChannel(defaultChannelId))
-    }
   }
 
   const listenerRenameChannel = (payload) => {

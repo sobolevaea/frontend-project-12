@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, createSelector } from '@reduxjs/toolkit'
 
 const defaultChannelId = 1
 
@@ -21,9 +21,18 @@ const uiSlice = createSlice({
 
 export const { setCurrentChannel } = uiSlice.actions
 
-export const selectCurrentChannelId = state => state.ui.currentId
-export const selectDefaultChannelId = state => state.ui.defaultId
-export const selectUiError = state => state.ui.error
-export const selectHasUiError = state => state.ui.isError
+const selectUiState = state => state.ui
+
+export const selectCurrentChannelId = createSelector(
+  selectUiState,
+  ui => ui?.currentId,
+)
+export const selectDefaultChannelId = createSelector(
+  selectUiState,
+  ui => ui?.defaultId,
+)
+
+// export const selectUiError = state => state.ui.error
+// export const selectHasUiError = state => state.ui.isError
 
 export default uiSlice.reducer
