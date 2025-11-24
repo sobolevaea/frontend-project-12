@@ -6,6 +6,7 @@ import { useFormik } from 'formik'
 import { useEffect, useState, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
+import { useTranslation } from 'react-i18next'
 
 import store from '../store/index.js'
 import ModalUniversal from './ModalUniversal.jsx'
@@ -67,7 +68,9 @@ const MainPage = () => {
   const state = store.getState()
   const [addMessage] = useAddMessage()
 
-  console.log(state.auth)
+  const { t } = useTranslation()
+
+  console.log(t('titles.channels'))
 
   const { isLoading: isChannelsLoading, data: channels } = useGetChannels()
   const { isLoading: isMessagesLoading } = useGetMessages()
@@ -129,8 +132,8 @@ const MainPage = () => {
       <div className="d-flex flex-column h-100">
         <nav className="shadow-sm navbar navbar-expand-lg navbar-light bg-white">
           <div className="container">
-            <a className="navbar-brand" href="/">Hexlet Chat</a>
-            {state.auth.isAuth && <button type="button" className="btn btn-primary" onClick={() => handleExit()}>Выйти</button>}
+            <a className="navbar-brand" href="/">{t('titles.home')}</a>
+            {state.auth.isAuth && <button type="button" className="btn btn-primary" onClick={() => handleExit()}>{t('buttons.exit')}</button>}
           </div>
         </nav>
         <ModalUniversal
@@ -143,7 +146,7 @@ const MainPage = () => {
           <div className="row h-100 bg-white flex-md-row">
             <div className="col-4 col-md-2 border-end px-0 bg-light flex-column h-100 d-flex">
               <div className="d-flex mt-1 justify-content-between mb-2 ps-4 pe-2 p-4">
-                <b>Каналы</b>
+                <b>{t('titles.channels')}</b>
                 <button type="button" className="p-0 text-primary btn btn-group-vertical" onClick={handleShowAddModal}>
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="20" height="20" fill="currentColor" className="bi bi-plus-square">
                     <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z">
@@ -170,7 +173,8 @@ const MainPage = () => {
                   <span className="text-muted">
                     {currentMessages.length}
                     {' '}
-                    сообщений
+                    {/* сделать падежи */}
+                    {t('texts.messages')}
                   </span>
                 </div>
                 <div id="messages-box" className="chat-messages overflow-auto px-5 ">
@@ -194,7 +198,7 @@ const MainPage = () => {
                           <path fillRule="evenodd" d="M15 2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1zM0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm4.5 5.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5z">
                           </path>
                         </svg>
-                        <span className="visually-hidden">Отправить</span>
+                        <span className="visually-hidden">{t('buttons.send')}</span>
                       </button>
                     </div>
                   </form>

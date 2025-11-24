@@ -2,12 +2,16 @@
 // инициализация сокета
 // локализация
 // фильтр нецензурных сообщений
-
+import { I18nextProvider } from 'react-i18next';
 import { Provider } from 'react-redux'
-import store from './store/index.js'
+import i18next from 'i18next';
 import App from './App.jsx'
+import store from './store/index.js'
 import channelsApi from './store/channelsApi.js'
 import messagesApi from './store/messagesApi.js'
+import ru from './locales/index.js'
+
+const defaultLanguage = 'ru'
 
 const initApp = (socket) => {
   const listenerNewMessage = (payload) => {
@@ -77,9 +81,25 @@ const initApp = (socket) => {
   socket.on('newChannel', listenerNewChannel)
   socket.on('removeChannel', listenerRemoveChannel)
   socket.on('renameChannel', listenerRenameChannel)
+
+  const i18n = i18next.createInstance();
+
+  i18n.init({
+    lng: defaultLanguage, // язык по умолчанию
+    resources: {
+      ru,
+    },
+    debug: true,
+    interpolation: {
+      escapeValue: false, // отключено для React
+    },
+  })
+
   return (
     <Provider store={store}>
-      <App />
+      <I18nextProvider i18n={i18n} defaultNS={'translation'}>
+        <App />
+      </I18nextProvider>
     </Provider>
   )
 }
