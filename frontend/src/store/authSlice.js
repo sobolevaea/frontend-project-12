@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 const initialState = {
   username: localStorage.getItem('username') ?? null,
   token: localStorage.getItem('token') ?? null,
-  isAuth: '',
+  isAuth: localStorage.getItem('token') ? true : false,
 }
 
 const authSlice = createSlice({
@@ -11,11 +11,16 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     logout: (state) => {
-      state.isAuth = false
       localStorage.removeItem('token')
+      localStorage.removeItem('username')
+      state.username = localStorage.getItem('username') ?? null
+      state.token = localStorage.getItem('token') ?? null
+      state.isAuth = state.token ? true : false
     },
     login: (state) => {
-      state.isAuth = initialState.token ? true : false
+      state.username = localStorage.getItem('username') ?? null
+      state.token = localStorage.getItem('token') ?? null
+      state.isAuth = state.token ? true : false
     },
   },
 })

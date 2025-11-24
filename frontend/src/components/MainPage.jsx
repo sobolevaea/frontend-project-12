@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import store from '../store/index.js'
 import ModalUniversal from './ModalUniversal.jsx'
 import LoaderWrapper from './LoaderWrapper.jsx'
+import { actions as authActions } from '../store/authSlice.js'
 import { selectCurrentChannel, useGetChannels } from '../store/channelsApi.js'
 import { useGetMessages, useAddMessage, selectCurrentMessages } from '../store/messagesApi.js'
 import { selectCurrentChannelId, setCurrentChannel } from '../store/uiSlice.js'
@@ -66,6 +67,8 @@ const MainPage = () => {
   const state = store.getState()
   const [addMessage] = useAddMessage()
 
+  console.log(state.auth)
+
   const { isLoading: isChannelsLoading, data: channels } = useGetChannels()
   const { isLoading: isMessagesLoading } = useGetMessages()
 
@@ -87,6 +90,12 @@ const MainPage = () => {
   const handleCloseModal = () => setModal({ show: false, type: null, channel: null })
 
   const navigate = useNavigate()
+  const dispatch = useDispatch()
+
+  const handleExit = () => {
+    dispatch(authActions.logout())
+    navigate('/login')
+  }
 
   useEffect(() => {
     const token = localStorage.getItem('token')
@@ -112,7 +121,6 @@ const MainPage = () => {
       }
       addMessage(newMessage)
       messageForm.resetForm()
-      console.log(messageForm)
     },
   })
 
@@ -122,7 +130,7 @@ const MainPage = () => {
         <nav className="shadow-sm navbar navbar-expand-lg navbar-light bg-white">
           <div className="container">
             <a className="navbar-brand" href="/">Hexlet Chat</a>
-            <button type="button" className="btn btn-primary">Выйти</button>
+            {state.auth.isAuth && <button type="button" className="btn btn-primary" onClick={() => handleExit()}>Выйти</button>}
           </div>
         </nav>
         <ModalUniversal
