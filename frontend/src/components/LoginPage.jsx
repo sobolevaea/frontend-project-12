@@ -3,10 +3,11 @@ import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { useFormik } from 'formik'
 import { object, string } from 'yup'
-import axios from 'axios'
+import axios, { isAxiosError } from 'axios'
 import cn from 'classnames'
 import { actions as authActions } from '../store/authSlice.js'
 import { useTranslation } from 'react-i18next'
+import { toast } from 'react-toastify'
 
 const loginSchema = object({
   username: string().required(),
@@ -19,6 +20,10 @@ const LoginPage = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
+  const handleError = (error) => {
+    toast.error(`${error}`)
+  }
+
   const onSubmit = async (values) => {
     try {
       const response = await axios.post('/api/v1/login', values)
@@ -28,7 +33,11 @@ const LoginPage = () => {
       dispatch(authActions.login())
       navigate('/')
     }
-    catch {
+    catch (e) {
+      if (isAxiosError(e)) {
+        handleError(t('errors.networkError'))
+        return
+      }
       setError(t('errors.wrongLoginOrPassword'))
     }
   }
@@ -65,7 +74,9 @@ const LoginPage = () => {
       </div>
       <div className="card-footer p-4">
         <div className="text-center">
-          <span>{t('texts.noAccount')}</span> <a href="/signup">{t('texts.signup')}</a>
+          <span>{t('texts.noAccount')}</span>
+          {' '}
+          <a href="/signup">{t('texts.signup')}</a>
         </div>
       </div>
     </>

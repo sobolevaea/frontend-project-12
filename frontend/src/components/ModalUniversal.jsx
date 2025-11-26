@@ -8,6 +8,7 @@ import { useAddChannel, useUpdateChannel, useDeleteChannel, selectChannelsNames 
 import { setCurrentChannel } from '../store/uiSlice.js'
 import { selectDefaultChannelId, selectCurrentChannelId } from '../store/uiSlice.js'
 import { useTranslation } from 'react-i18next'
+import { toast } from 'react-toastify'
 
 const ModalUniversal = ({ show, onHide, type, channel }) => {
   const [addChannel] = useAddChannel()
@@ -41,15 +42,17 @@ const ModalUniversal = ({ show, onHide, type, channel }) => {
           const response = await addChannel(values)
           const newChannelId = response.data.id
           dispatch(setCurrentChannel({ id: newChannelId }))
+          toast.success(`${t('toasts.add')}`)
         }
         else if (type === 'rename') {
           await renameChannel({ id: channel.id, ...values })
+          toast.success(`${t('toasts.rename')}`)
         }
         onHide()
         formik.resetForm()
       }
       catch (error) {
-        console.error(`Failed to ${type} channel:`, error)
+        toast.error(`Failed to ${type} channel: ${error.message}`)
       }
     },
   })
@@ -60,6 +63,7 @@ const ModalUniversal = ({ show, onHide, type, channel }) => {
       if (channel.id === currentChannelId) {
         dispatch(setCurrentChannel({ id: defaultChannelId }))
       }
+      toast.success(`${t('toasts.remove')}`)
       onHide()
     }
     catch (error) {

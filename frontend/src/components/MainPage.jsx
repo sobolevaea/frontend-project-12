@@ -70,8 +70,6 @@ const MainPage = () => {
 
   const { t } = useTranslation()
 
-  console.log(t('titles.channels'))
-
   const { isLoading: isChannelsLoading, data: channels } = useGetChannels()
   const { isLoading: isMessagesLoading } = useGetMessages()
 

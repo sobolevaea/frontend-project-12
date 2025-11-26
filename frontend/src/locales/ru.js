@@ -19,7 +19,7 @@ export default {
       enterMessage: 'Введите сообщение...',
       send: 'Отправить',
       cansel: 'Отменить',
-      signup: 'Зарегистрироваться'
+      signup: 'Зарегистрироваться',
     },
     texts: {
       confirm: 'Уверены?',
@@ -35,6 +35,11 @@ export default {
       rename: 'Переименовать канал',
       remove: 'Удалить канал',
     },
+    toasts: {
+      add: 'Канал создан',
+      rename: 'Канал переименован',
+      remove: 'Канал удалён',
+    },
     errors: {
       wrongLoginOrPassword: 'Неверный логин или пароль',
       moreThan6Symbols: 'Не менее 6 символов',
@@ -42,6 +47,7 @@ export default {
       mustBeUnique: 'Должно быть уникальным',
       userExists: 'Такой пользователь уже существует',
       mustBeSamePasswords: 'Пароли должны совпадать',
-    }
+      networkError: 'Ошибка соединения',
+    },
   },
 }

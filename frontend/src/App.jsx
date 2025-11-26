@@ -4,6 +4,7 @@ import MainPage from './components/MainPage.jsx'
 import LoginPage from './components/LoginPage.jsx'
 import SignupPage from './components/SignupPage.jsx'
 import AuthWrapper from './components/AuthWrapper.jsx'
+import Toaster from './components/Toaster.jsx'
 
 const App = () => {
   return (
@@ -14,6 +15,11 @@ const App = () => {
         <Route path="login" element={<AuthWrapper><LoginPage /></AuthWrapper>} />
         <Route path="signup" element={<AuthWrapper><SignupPage /></AuthWrapper>} />
       </Routes>
+      <Toaster
+        position="top-right"
+        theme="light"
+        autoClose={5000}
+      />
     </BrowserRouter>
   )
 }
