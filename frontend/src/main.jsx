@@ -3,10 +3,6 @@ import { createRoot } from 'react-dom/client'
 import { io } from 'socket.io-client'
 import initApp from './init.jsx'
 
-// отсюда передаем сокет в инит
-// сюда передаем из init
-// функция будет асинхронной
-
 const runApp = async () => {
   const socket = io()
   const app = await initApp(socket)

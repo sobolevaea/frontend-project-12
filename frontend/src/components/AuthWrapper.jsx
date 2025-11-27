@@ -1,8 +1,9 @@
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { actions as authActions } from '../store/authSlice.js'
 import { useTranslation } from 'react-i18next'
+
 import store from '../store/index.js'
+import { actions as authActions } from '../store/authSlice.js'
 
 const AuthWrapper = ({ children }) => {
   const state = store.getState()

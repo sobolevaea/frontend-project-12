@@ -4,12 +4,13 @@ import Modal from 'react-bootstrap/Modal'
 import filter from 'leo-profanity'
 import { useFormik } from 'formik'
 import { object, string } from 'yup'
+import { toast } from 'react-toastify'
+import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
+
 import { useAddChannel, useUpdateChannel, useDeleteChannel, selectChannelsNames } from '../store/channelsApi.js'
 import { setCurrentChannel } from '../store/uiSlice.js'
 import { selectDefaultChannelId, selectCurrentChannelId } from '../store/uiSlice.js'
-import { useTranslation } from 'react-i18next'
-import { toast } from 'react-toastify'
 
 const ModalUniversal = ({ show, onHide, type, channel }) => {
   const [addChannel] = useAddChannel()
@@ -21,7 +22,6 @@ const ModalUniversal = ({ show, onHide, type, channel }) => {
   const currentChannelId = useSelector(selectCurrentChannelId)
   const defaultChannelId = useSelector(selectDefaultChannelId)
 
-  // Фильтруем имена для валидации (для переименования исключаем текущее имя канала)
   const filteredNames = type === 'rename'
     ? names.filter(name => name !== channel?.name)
     : names
@@ -73,7 +73,6 @@ const ModalUniversal = ({ show, onHide, type, channel }) => {
     }
   }
 
-  // Функции для определения текстов в зависимости от типа
   const getTitle = () => {
     switch (type) {
       case 'add': return t('modals.add')
@@ -103,7 +102,6 @@ const ModalUniversal = ({ show, onHide, type, channel }) => {
       <Modal.Body>
         {type === 'remove'
           ? (
-        // Контент для удаления
               <div>
                 <p className="lead">
                   {t('texts.confirm')}
@@ -119,7 +117,6 @@ const ModalUniversal = ({ show, onHide, type, channel }) => {
               </div>
             )
           : (
-        // Контент для добавления/переименования
               <form onSubmit={formik.handleSubmit}>
                 <div>
                   <input

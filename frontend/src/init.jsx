@@ -1,16 +1,15 @@
-// тут ожидается провайдер
-// инициализация сокета
-// локализация
-// фильтр нецензурных сообщений
-import { I18nextProvider } from 'react-i18next'
-import { Provider } from 'react-redux'
 import i18next from 'i18next'
 import filter from 'leo-profanity'
+import { Provider } from 'react-redux'
+import { I18nextProvider } from 'react-i18next'
+import { Provider as ProviderRollbar, ErrorBoundary } from '@rollbar/react'
+
 import App from './App.jsx'
 import store from './store/index.js'
 import channelsApi from './store/channelsApi.js'
 import messagesApi from './store/messagesApi.js'
 import ru from './locales/index.js'
+import rollbarConfig from './rollbar.js'
 
 const defaultLanguage = 'ru'
 
@@ -99,11 +98,15 @@ const initApp = (socket) => {
   filter.loadDictionary(defaultLanguage)
 
   return (
-    <Provider store={store}>
-      <I18nextProvider i18n={i18n} defaultNS="translation">
-        <App />
-      </I18nextProvider>
-    </Provider>
+    <ProviderRollbar config={rollbarConfig}>
+      <ErrorBoundary>
+        <Provider store={store}>
+          <I18nextProvider i18n={i18n} defaultNS="translation">
+            <App />
+          </I18nextProvider>
+        </Provider>
+      </ErrorBoundary>
+    </ProviderRollbar>
   )
 }
 

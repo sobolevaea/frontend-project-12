@@ -1,13 +1,15 @@
+import cn from 'classnames'
+import axios, { isAxiosError } from 'axios'
 import { useState } from 'react'
+import { toast } from 'react-toastify'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useFormik } from 'formik'
 import { object, string, ref } from 'yup'
-import axios, { isAxiosError } from 'axios'
-import cn from 'classnames'
+
+import singupImg from '../assets/avatar-1.jpg'
 import { actions as authActions } from '../store/authSlice.js'
-import { toast } from 'react-toastify'
 
 const signupSchema = object({
   username: string().min(3, 'От 3 до 20 символов').max(20, 'От 3 до 20 символов'),
@@ -54,14 +56,10 @@ const SignupPage = () => {
     onSubmit,
   })
 
-  { /*   const inputClass = cn('form-control', {
-    'is-invalid': error,
-  }) */ }
-
   return (
     <div className="card-body d-flex flex-column flex-md-row justify-content-around align-items-center p-5">
       <div className="">
-        <img src="./src/assets/avatar-1.jpg" className="rounded-circle" alt="Регистрация" />
+        <img src={singupImg} className="rounded-circle" alt="Регистрация" />
       </div>
       <form onSubmit={formik.handleSubmit} className="w-50">
         <h1 className="text-center mb-4">{t('titles.signup')}</h1>

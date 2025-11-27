@@ -1,13 +1,16 @@
+import cn from 'classnames'
+import axios, { isAxiosError } from 'axios'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { useFormik } from 'formik'
-import { object, string } from 'yup'
-import axios, { isAxiosError } from 'axios'
-import cn from 'classnames'
-import { actions as authActions } from '../store/authSlice.js'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
+import { useFormik } from 'formik'
+import { object, string } from 'yup'
+
+import loginImg from '../assets/avatar.jpg'
+import { actions as authActions } from '../store/authSlice.js'
+
 
 const loginSchema = object({
   username: string().required(),
@@ -56,7 +59,7 @@ const LoginPage = () => {
     <>
       <div className="card-body row p-5">
         <div className="col-12 col-md-6 d-flex align-items-center justify-content-center">
-          <img src="./src/assets/avatar.jpg" className="rounded-circle" alt="Войти" />
+          <img src={loginImg} className="rounded-circle" alt="Войти" />
         </div>
         <form onSubmit={formik.handleSubmit} className="col-12 col-md-6 mt-3 mt-md-0">
           <h1 className="text-center mb-4">{t('titles.enter')}</h1>
