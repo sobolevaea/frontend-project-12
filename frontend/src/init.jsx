@@ -89,7 +89,7 @@ const initApp = (socket) => {
     resources: {
       ru,
     },
-    debug: true,
+    debug: false,
     interpolation: {
       escapeValue: false, // отключено для React
     },
