@@ -7,6 +7,7 @@ import { useEffect, useState, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { useTranslation } from 'react-i18next'
+import filter from 'leo-profanity'
 
 import store from '../store/index.js'
 import ModalUniversal from './ModalUniversal.jsx'
@@ -58,7 +59,7 @@ const RenderMessages = ({ children }) => {
   return children.map(message => (
     <div className="text-break mb-2" key={message.id}>
       <b>{message.username}</b>
-      :
+      {': '}
       {message.body}
     </div>
   ))
@@ -116,7 +117,7 @@ const MainPage = () => {
     initialValues: { body: '' },
     onSubmit: ({ body }) => {
       const newMessage = {
-        body,
+        body: filter.clean(body),
         channelId: currentChannelId,
         username: state.auth.username,
       }
@@ -164,15 +165,11 @@ const MainPage = () => {
                 <div className="bg-light mb-4 p-3 shadow-sm small">
                   <p className="m-0">
                     <b>
-                      #
-                      {currentChannel?.name}
+                      {`# ${currentChannel?.name}`}
                     </b>
                   </p>
                   <span className="text-muted">
-                    {currentMessages.length}
-                    {' '}
-                    {/* сделать падежи */}
-                    {t('texts.messages')}
+                    {t('texts.messages.count', { count: currentMessages.length })}
                   </span>
                 </div>
                 <div id="messages-box" className="chat-messages overflow-auto px-5 ">

@@ -1,6 +1,7 @@
 import cn from 'classnames'
 import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
+import filter from 'leo-profanity'
 import { useFormik } from 'formik'
 import { object, string } from 'yup'
 import { useDispatch, useSelector } from 'react-redux'
@@ -38,6 +39,7 @@ const ModalUniversal = ({ show, onHide, type, channel }) => {
     enableReinitialize: true,
     onSubmit: async (values) => {
       try {
+        values.name = filter.clean(values.name)
         if (type === 'add') {
           const response = await addChannel(values)
           const newChannelId = response.data.id

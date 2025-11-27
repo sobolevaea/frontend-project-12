@@ -23,7 +23,11 @@ export default {
     },
     texts: {
       confirm: 'Уверены?',
-      messages: 'сообщений', // дописать падежи
+      messages: {
+        count_one: '{{count}} сообщение',
+        count_few: '{{count}} сообщения',
+        count_many: '{{count}} сообщений',
+      },
       noAccount: 'Нет аккаунта?',
       signup: 'Регистрация',
       goTo: 'Но вы можете перейти',

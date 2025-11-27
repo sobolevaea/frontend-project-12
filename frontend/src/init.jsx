@@ -5,6 +5,7 @@
 import { I18nextProvider } from 'react-i18next'
 import { Provider } from 'react-redux'
 import i18next from 'i18next'
+import filter from 'leo-profanity'
 import App from './App.jsx'
 import store from './store/index.js'
 import channelsApi from './store/channelsApi.js'
@@ -94,6 +95,8 @@ const initApp = (socket) => {
       escapeValue: false, // отключено для React
     },
   })
+
+  filter.loadDictionary(defaultLanguage)
 
   return (
     <Provider store={store}>
