@@ -11,7 +11,6 @@ import { object, string } from 'yup'
 import loginImg from '../assets/avatar.jpg'
 import { actions as authActions } from '../store/authSlice.js'
 
-
 const loginSchema = object({
   username: string().required(),
   password: string().required(),
