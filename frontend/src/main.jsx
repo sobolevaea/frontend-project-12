@@ -8,7 +8,7 @@ import initApp from './init.jsx'
 // функция будет асинхронной
 
 const runApp = async () => {
-  const socket = io('http://localhost:5002')
+  const socket = io()
   const app = await initApp(socket)
   createRoot(document.getElementById('chat')).render(
     <StrictMode>
