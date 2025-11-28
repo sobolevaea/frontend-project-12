@@ -45,7 +45,7 @@ export default {
       remove: 'Канал удалён',
     },
     errors: {
-      wrongLoginOrPassword: 'Неверный логин или пароль',
+      wrongLoginOrPassword: 'Неверные имя пользователя или пароль',
       moreThan6Symbols: 'Не менее 6 символов',
       from3to20Symbols: 'От 3 до 20 символов',
       mustBeUnique: 'Должно быть уникальным',
