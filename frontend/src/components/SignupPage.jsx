@@ -76,7 +76,7 @@ const SignupPage = () => {
             required
           />
           <label className="form-label" htmlFor="username">{t('buttons.enterUsername')}</label>
-          {formik.touched.username && formik.errors.username && <div placement="right" className="invalid-tooltip">{formik.errors.username}</div>}
+          {formik.touched.username && formik.errors.username && <div className="invalid-tooltip">{formik.errors.username}</div>}
         </div>
         <div className="form-floating mb-3">
           <input
