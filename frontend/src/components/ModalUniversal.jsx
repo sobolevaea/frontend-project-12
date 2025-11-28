@@ -2,6 +2,7 @@ import cn from 'classnames'
 import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
 import filter from 'leo-profanity'
+import { useEffect, useRef } from 'react'
 import { useFormik } from 'formik'
 import { object, string } from 'yup'
 import { toast } from 'react-toastify'
@@ -21,6 +22,8 @@ const ModalUniversal = ({ show, onHide, type, channel }) => {
   const names = useSelector(selectChannelsNames)
   const currentChannelId = useSelector(selectCurrentChannelId)
   const defaultChannelId = useSelector(selectDefaultChannelId)
+
+  let inputRef = useRef(null)
 
   const filteredNames = type === 'rename'
     ? names.filter(name => name !== channel?.name)
@@ -86,6 +89,14 @@ const ModalUniversal = ({ show, onHide, type, channel }) => {
     'is-invalid': formik.errors.name,
   })
 
+  useEffect(() => {
+    if (show && inputRef.current) {
+      setTimeout(() => {
+        inputRef.current.select()
+      }, 0)
+    }
+  }, [show])
+
   return (
     <Modal
       show={show}
@@ -120,9 +131,11 @@ const ModalUniversal = ({ show, onHide, type, channel }) => {
               <form onSubmit={formik.handleSubmit}>
                 <div>
                   <input
+                    ref={inputRef}
                     name="name"
                     id="name"
                     className={inputClass}
+                    onFocus={() => console.log(1)}
                     onChange={formik.handleChange}
                     value={formik.values.name}
                     autoFocus

@@ -12,6 +12,7 @@ import ru from './locales/index.js'
 import rollbarConfig from './rollbar.js'
 
 const defaultLanguage = 'ru'
+const languages = [defaultLanguage, 'en']
 
 const initApp = (socket) => {
   const listenerNewMessage = (payload) => {
@@ -95,7 +96,7 @@ const initApp = (socket) => {
     },
   })
 
-  filter.loadDictionary(defaultLanguage)
+  languages.forEach(lng => filter.loadDictionary(lng))
 
   return (
     <ProviderRollbar config={rollbarConfig}>
