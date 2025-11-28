@@ -36,7 +36,7 @@ const LoginPage = () => {
       navigate('/')
     }
     catch (e) {
-      if (isAxiosError(e)) {
+      if (isAxiosError(e) && e.status !== 401) {
         handleError(t('errors.networkError'))
         return
       }
