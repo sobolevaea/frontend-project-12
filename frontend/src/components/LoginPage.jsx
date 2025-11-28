@@ -63,11 +63,11 @@ const LoginPage = () => {
         <form onSubmit={formik.handleSubmit} className="col-12 col-md-6 mt-3 mt-md-0">
           <h1 className="text-center mb-4">{t('titles.enter')}</h1>
           <div className="form-floating mb-3">
-            <input type="username" name="username" className={inputClass} onChange={formik.handleChange} value={formik.values.username} required placeholder={t('buttons.enterNickname')} />
+            <input id="username" type="username" name="username" className={inputClass} onChange={formik.handleChange} value={formik.values.username} required placeholder={t('buttons.enterNickname')} />
             <label htmlFor="username">{t('buttons.enterNickname')}</label>
           </div>
           <div className="form-floating mb-4">
-            <input type="password" name="password" className={inputClass} onChange={formik.handleChange} value={formik.values.password} required placeholder={t('buttons.enterPassword')} />
+            <input id="password" type="password" name="password" className={inputClass} onChange={formik.handleChange} value={formik.values.password} required placeholder={t('buttons.enterPassword')} />
             <label className="form-label" htmlFor="password">{t('buttons.enterPassword')}</label>
             {error && <div className="invalid-tooltip">{error}</div>}
           </div>

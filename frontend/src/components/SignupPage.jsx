@@ -65,7 +65,7 @@ const SignupPage = () => {
         <h1 className="text-center mb-4">{t('titles.signup')}</h1>
         <div className="form-floating mb-3">
           <input
-            type="username"
+            id="username"
             name="username"
             className={cn('form-control', {
               'is-invalid': (formik.touched.username && formik.errors.username) || error,
@@ -80,6 +80,7 @@ const SignupPage = () => {
         </div>
         <div className="form-floating mb-3">
           <input
+            id="password"
             type="password"
             name="password"
             aria-describedby="passwordHelpBlock"
@@ -96,6 +97,7 @@ const SignupPage = () => {
         </div>
         <div className="form-floating mb-4">
           <input
+            id="confirmPassword"
             type="password"
             name="confirmPassword"
             className={cn('form-control', {
