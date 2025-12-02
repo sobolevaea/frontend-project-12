@@ -11,12 +11,6 @@ import { object, string, ref } from 'yup'
 import singupImg from '../assets/avatar-1.jpg'
 import { actions as authActions } from '../store/authSlice.js'
 
-const signupSchema = object({
-  username: string().min(3, 'От 3 до 20 символов').max(20, 'От 3 до 20 символов'),
-  password: string().min(6, 'Не менее 6 символов'),
-  confirmPassword: string().oneOf([ref('password')], 'Пароли должны совпадать'),
-})
-
 const SignupPage = () => {
   const [error, setError] = useState(null)
   const { t } = useTranslation()
@@ -29,7 +23,10 @@ const SignupPage = () => {
 
   const onSubmit = async (values) => {
     try {
-      const response = await axios.post('/api/v1/signup', { username: values.username, password: values.password })
+      const response = await axios.post('/api/v1/signup', {
+        username: values.username,
+        password: values.password,
+      })
       const { token, username } = response.data
       dispatch(authActions.logout())
       localStorage.setItem('token', token)
@@ -50,9 +47,20 @@ const SignupPage = () => {
     }
   }
 
+  const validationSchema = object({
+    username: string()
+      .trim()
+      .min(3, 'От 3 до 20 символов')
+      .max(20, 'От 3 до 20 символов'),
+    password: string().trim().min(6, 'Не менее 6 символов'),
+    confirmPassword: string()
+      .trim()
+      .oneOf([ref('password')], 'Пароли должны совпадать'),
+  })
+
   const formik = useFormik({
     initialValues: { username: '', password: '', confirmPassword: '' },
-    validationSchema: signupSchema,
+    validationSchema,
     onSubmit,
   })
 
@@ -68,15 +76,20 @@ const SignupPage = () => {
             id="username"
             name="username"
             className={cn('form-control', {
-              'is-invalid': (formik.touched.username && formik.errors.username) || error,
+              'is-invalid':
+                (formik.touched.username && formik.errors.username) || error,
             })}
             onChange={formik.handleChange}
             value={formik.values.username}
             placeholder={t('errors.from3to20Symbols')}
             required
           />
-          <label className="form-label" htmlFor="username">{t('buttons.enterUsername')}</label>
-          {formik.touched.username && formik.errors.username && <div className="invalid-tooltip">{formik.errors.username}</div>}
+          <label className="form-label" htmlFor="username">
+            {t('buttons.enterUsername')}
+          </label>
+          {formik.touched.username && formik.errors.username && (
+            <div className="invalid-tooltip">{formik.errors.username}</div>
+          )}
         </div>
         <div className="form-floating mb-3">
           <input
@@ -85,15 +98,20 @@ const SignupPage = () => {
             name="password"
             aria-describedby="passwordHelpBlock"
             className={cn('form-control', {
-              'is-invalid': (formik.touched.password && formik.errors.password) || error,
+              'is-invalid':
+                (formik.touched.password && formik.errors.password) || error,
             })}
             onChange={formik.handleChange}
             value={formik.values.password}
             placeholder={t('errors.moreThan6Symbols')}
             required
           />
-          <label className="form-label" htmlFor="password">{t('buttons.enterPassword')}</label>
-          {formik.touched.password && formik.errors.password && <div className="invalid-tooltip">{formik.errors.password}</div>}
+          <label className="form-label" htmlFor="password">
+            {t('buttons.enterPassword')}
+          </label>
+          {formik.touched.password && formik.errors.password && (
+            <div className="invalid-tooltip">{formik.errors.password}</div>
+          )}
         </div>
         <div className="form-floating mb-4">
           <input
@@ -101,18 +119,29 @@ const SignupPage = () => {
             type="password"
             name="confirmPassword"
             className={cn('form-control', {
-              'is-invalid': (formik.touched.confirmPassword && formik.errors.confirmPassword) || error,
+              'is-invalid':
+                (formik.touched.confirmPassword
+                  && formik.errors.confirmPassword)
+                || error,
             })}
             onChange={formik.handleChange}
             value={formik.values.confirmPassword}
             placeholder={t('errors.mustBeSamePasswords')}
             required
           />
-          <label className="form-label" htmlFor="confirmPassword">{t('buttons.confirmPassword')}</label>
-          {formik.touched.confirmPassword && formik.errors.confirmPassword && <div className="invalid-tooltip">{formik.errors.confirmPassword}</div>}
+          <label className="form-label" htmlFor="confirmPassword">
+            {t('buttons.confirmPassword')}
+          </label>
+          {formik.touched.confirmPassword && formik.errors.confirmPassword && (
+            <div className="invalid-tooltip">
+              {formik.errors.confirmPassword}
+            </div>
+          )}
           {error && <div className="invalid-tooltip">{error}</div>}
         </div>
-        <button type="submit" className="w-100 btn btn-outline-primary">{t('buttons.signup')}</button>
+        <button type="submit" className="w-100 btn btn-outline-primary">
+          {t('buttons.signup')}
+        </button>
       </form>
     </div>
   )

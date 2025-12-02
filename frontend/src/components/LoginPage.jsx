@@ -11,11 +11,6 @@ import { object, string } from 'yup'
 import loginImg from '../assets/avatar.jpg'
 import { actions as authActions } from '../store/authSlice.js'
 
-const loginSchema = object({
-  username: string().required(),
-  password: string().required(),
-})
-
 const LoginPage = () => {
   const [error, setError] = useState(null)
   const { t } = useTranslation()
@@ -44,9 +39,14 @@ const LoginPage = () => {
     }
   }
 
+  const validationSchema = object({
+    username: string().trim().required(),
+    password: string().trim().required(),
+  })
+
   const formik = useFormik({
     initialValues: { username: '', password: '' },
-    validationSchema: loginSchema,
+    validationSchema,
     onSubmit,
   })
 

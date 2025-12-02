@@ -1,5 +1,5 @@
 import i18next from 'i18next'
-import filter from 'leo-profanity'
+import leoProfanity from 'leo-profanity'
 import { Provider } from 'react-redux'
 import { I18nextProvider } from 'react-i18next'
 import { Provider as ProviderRollbar, ErrorBoundary } from '@rollbar/react'
@@ -12,7 +12,9 @@ import ru from './locales/index.js'
 import rollbarConfig from './rollbar.js'
 
 const defaultLanguage = 'ru'
-const languages = [defaultLanguage, 'en']
+
+const ruDictionary = leoProfanity.getDictionary(defaultLanguage)
+leoProfanity.add(ruDictionary)
 
 const initApp = (socket) => {
   const listenerNewMessage = (payload) => {
@@ -86,17 +88,15 @@ const initApp = (socket) => {
   const i18n = i18next.createInstance()
 
   i18n.init({
-    lng: defaultLanguage, // язык по умолчанию
+    lng: defaultLanguage,
     resources: {
       ru,
     },
     debug: false,
     interpolation: {
-      escapeValue: false, // отключено для React
+      escapeValue: false,
     },
   })
-
-  languages.forEach(lng => filter.loadDictionary(lng))
 
   return (
     <ProviderRollbar config={rollbarConfig}>

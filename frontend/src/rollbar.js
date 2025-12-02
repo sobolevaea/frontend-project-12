@@ -1,6 +1,6 @@
 const rollbarConfig = {
-  accessToken: 'f21d5e9b01f34943b49d33195670585e',
-  environment: 'testenv',
+  accessToken: import.meta.VITE_ROLLBAR_TOKEN,
+  environment: 'production',
 }
 
 export default rollbarConfig

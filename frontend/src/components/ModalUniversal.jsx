@@ -31,6 +31,7 @@ const ModalUniversal = ({ show, onHide, type, channel }) => {
 
   const validationSchema = object({
     name: string()
+      .trim()
       .min(3, t('errors.from3to20Symbols'))
       .max(20, t('errors.from3to20Symbols'))
       .notOneOf(filteredNames, t('errors.mustBeUnique')),

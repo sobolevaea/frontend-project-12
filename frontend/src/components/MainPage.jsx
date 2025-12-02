@@ -4,6 +4,7 @@ import Dropdown from 'react-bootstrap/Dropdown'
 import Button from 'react-bootstrap/Button'
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
 import { useFormik } from 'formik'
+import { object, string } from 'yup'
 import { useEffect, useState, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
@@ -16,6 +17,14 @@ import { actions as authActions } from '../store/authSlice.js'
 import { selectCurrentChannel, useGetChannels } from '../store/channelsApi.js'
 import { useGetMessages, useAddMessage, selectCurrentMessages } from '../store/messagesApi.js'
 import { selectCurrentChannelId, setCurrentChannel } from '../store/uiSlice.js'
+
+const scrollToBottom = (element) => {
+  if (element.current) {
+    element.current.scrollTo({
+      top: element.current.scrollHeight,
+    })
+  }
+}
 
 const RenderChannels = ({ children, onRename, onRemove }) => {
   const dispatch = useDispatch()
@@ -72,9 +81,7 @@ const MainPage = () => {
   const { t } = useTranslation()
 
   const { isLoading: isChannelsLoading, data: channels } = useGetChannels()
-  const { isLoading: isMessagesLoading } = useGetMessages()
-
-  const inputRef = useRef(null)
+  const { isLoading: isMessagesLoading, data: messages } = useGetMessages()
 
   const currentChannelId = useSelector(selectCurrentChannelId)
   const currentChannel = useSelector(selectCurrentChannel)
@@ -107,22 +114,48 @@ const MainPage = () => {
     }
   }, [navigate])
 
+  const inputRef = useRef(null)
+  const messagesBoxRef = useRef(null)
+  const channelsBoxRef = useRef(null)
+
   useEffect(() => {
     if (inputRef.current) {
       inputRef.current.focus()
     }
   }, [currentChannelId])
 
+  useEffect(() => {
+    scrollToBottom(messagesBoxRef)
+  }, [messages])
+
+  useEffect(() => {
+    scrollToBottom(messagesBoxRef)
+  }, [currentChannelId])
+
+  useEffect(() => {
+    scrollToBottom(channelsBoxRef)
+  }, [channels])
+
+  const validationSchema = object({
+    body: string().trim().required(),
+  })
+
   const messageForm = useFormik({
     initialValues: { body: '' },
+    validationSchema,
     onSubmit: ({ body }) => {
-      const newMessage = {
-        body: filter.clean(body),
-        channelId: currentChannelId,
-        username: state.auth.username,
+      try {
+        const newMessage = {
+          body: filter.clean(body),
+          channelId: currentChannelId,
+          username: state.auth.username,
+        }
+        addMessage(newMessage)
+        messageForm.resetForm()
       }
-      addMessage(newMessage)
-      messageForm.resetForm()
+      catch (e) {
+        console.log(e)
+      }
     },
   })
 
@@ -156,7 +189,7 @@ const MainPage = () => {
                   <span className="visually-hidden">+</span>
                 </button>
               </div>
-              <ul id="channels-box" className="nav flex-column nav-pills nav-fill px-2 mb-3 overflow-auto h-100 d-block">
+              <ul id="channels-box" ref={channelsBoxRef} className="nav flex-column nav-pills nav-fill px-2 mb-3 overflow-auto h-100 d-block">
                 {channels && <RenderChannels onRename={handleShowRenameModal} onRemove={handleShowRemoveModal}>{channels}</RenderChannels>}
               </ul>
             </div>
@@ -172,11 +205,11 @@ const MainPage = () => {
                     {t('texts.messages.count', { count: currentMessages.length })}
                   </span>
                 </div>
-                <div id="messages-box" className="chat-messages overflow-auto px-5 ">
+                <div id="messages-box" ref={messagesBoxRef} className="chat-messages overflow-auto px-5 ">
                   {currentMessages && <RenderMessages>{currentMessages}</RenderMessages>}
                 </div>
                 <div className="mt-auto px-5 py-3">
-                  <form onSubmit={messageForm.handleSubmit} noValidate="" className="py-1 border rounded-2">
+                  <form onSubmit={messageForm.handleSubmit} noValidate className="py-1 border rounded-2">
                     <div className="input-group has-validation">
                       <input
                         ref={inputRef}
