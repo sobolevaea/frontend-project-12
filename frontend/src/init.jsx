@@ -8,10 +8,12 @@ import App from './App.jsx'
 import store from './store/index.js'
 import channelsApi from './store/channelsApi.js'
 import messagesApi from './store/messagesApi.js'
-import ru from './locales/index.js'
+import resources from './locales/index.js'
 import rollbarConfig from './rollbar.js'
 
 const defaultLanguage = 'ru'
+const state = store.getState(state => state)
+const defaultChannelId = state.ui.defaultId
 
 const ruDictionary = leoProfanity.getDictionary(defaultLanguage)
 leoProfanity.add(ruDictionary)
@@ -49,7 +51,7 @@ const initApp = (socket) => {
         (draftChannels) => {
           const index = draftChannels.findIndex(channel => channel.id === payload.id)
           if (index !== -1) {
-            draftChannels.splice(index, 1)
+            draftChannels.splice(index, defaultChannelId)
           }
         },
       ),
@@ -89,9 +91,7 @@ const initApp = (socket) => {
 
   i18n.init({
     lng: defaultLanguage,
-    resources: {
-      ru,
-    },
+    resources,
     debug: false,
     interpolation: {
       escapeValue: false,

@@ -7,6 +7,11 @@ const initialState = {
   defaultId: String(defaultChannelId),
   error: '',
   isError: false,
+  modalConfig: {
+    show: '',
+    type: '',
+    channel: '',
+  },
 }
 
 const uiSlice = createSlice({
@@ -16,10 +21,13 @@ const uiSlice = createSlice({
     setCurrentChannel: (state, { payload }) => {
       state.currentId = payload.id
     },
+    setModalConfig: (state, { payload }) => {
+      state.modalConfig = payload
+    },
   },
 })
 
-export const { setCurrentChannel } = uiSlice.actions
+export const { setCurrentChannel, setModalConfig } = uiSlice.actions
 
 const selectUiState = state => state.ui
 
@@ -32,7 +40,22 @@ export const selectDefaultChannelId = createSelector(
   ui => ui?.defaultId,
 )
 
-// export const selectUiError = state => state.ui.error
-// export const selectHasUiError = state => state.ui.isError
+const selectModalConfig = createSelector(
+  selectUiState,
+  ui => ui?.modalConfig,
+)
+
+export const selectModalShow = createSelector(
+  selectModalConfig,
+  modalConfig => modalConfig?.show,
+)
+export const selectModalType = createSelector(
+  selectModalConfig,
+  modalConfig => modalConfig?.type,
+)
+export const selectModalChannel = createSelector(
+  selectModalConfig,
+  modalConfig => modalConfig?.channel,
+)
 
 export default uiSlice.reducer

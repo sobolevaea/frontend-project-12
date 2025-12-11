@@ -1,7 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit'
+
+import uiSlice from './uiSlice.js'
 import authSlice from './authSlice.js'
 import chatSlice from './chatSlice.js'
-import uiSlice from './uiSlice.js'
 import channelsApi from './channelsApi.js'
 import messagesApi from './messagesApi.js'
 

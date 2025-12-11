@@ -1,11 +1,12 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { createSelector } from '@reduxjs/toolkit'
-import routes from '../../routes.js'
-import { selectCurrentChannelId } from './uiSlice.js'
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+
+import { getApiPath, MESSAGES_API } from '../../routes.js'
 import { prepareHeaders } from './helpers'
+import { selectCurrentChannelId } from './uiSlice.js'
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: routes.messagesPath(),
+  baseUrl: getApiPath(MESSAGES_API),
   prepareHeaders,
 })
 

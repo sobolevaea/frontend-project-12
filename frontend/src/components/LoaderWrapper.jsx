@@ -1,4 +1,5 @@
 import cn from 'classnames'
+
 import Loader from './Loader.jsx'
 
 const LoaderWrapper = ({ isLoading, children }) => {
