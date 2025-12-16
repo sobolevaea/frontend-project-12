@@ -1,8 +1,8 @@
 import { useSelector } from 'react-redux'
 import { Outlet, Navigate } from 'react-router-dom'
 
-import { selectIsAuth } from '../store/authSlice'
-import { getPage, PAGE_LOGIN } from '../routes'
+import { selectIsAuth } from '../store/authSlice.js'
+import { getPage, PAGE_LOGIN } from './routes.js'
 
 const PrivateRoute = () => {
   const isAuth = useSelector(selectIsAuth)

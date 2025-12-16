@@ -9,7 +9,7 @@ import { object, string } from 'yup'
 import { useTranslation } from 'react-i18next'
 
 import { actions as authActions } from '../store/authSlice.js'
-import { getApiPath, getPath, LOGIN_API, MAIN_PAGE } from '../../routes.js'
+import { getApiPath, getPath, LOGIN_API, MAIN_PAGE } from '../routes.js'
 
 const LoginForm = () => {
   const { t } = useTranslation()

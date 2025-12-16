@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { getPath, LOGIN_PAGE } from '../../routes.js'
+import { getPath, LOGIN_PAGE } from '../routes.js'
 import { actions as authActions, selectIsAuth } from '../store/authSlice.js'
 
 const Header = () => {

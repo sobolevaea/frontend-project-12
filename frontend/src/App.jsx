@@ -8,7 +8,7 @@ import LoginPage from './components/LoginPage.jsx'
 import SignupPage from './components/SignupPage.jsx'
 import NotFoundPage from './components/NotFoundPage.jsx'
 import PrivateRoute from './components/misc/PrivateRoute.jsx'
-import { getPath, MAIN_PAGE, LOGIN_PAGE, SIGNUP_PAGE, NOT_FOUND_PAGE } from '../routes.js'
+import { getPath, MAIN_PAGE, LOGIN_PAGE, SIGNUP_PAGE, NOT_FOUND_PAGE } from './routes.js'
 
 const App = () => {
   return (

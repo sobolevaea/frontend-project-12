@@ -1,7 +1,7 @@
 import { createSelector } from '@reduxjs/toolkit'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
-import { getApiPath, MESSAGES_API } from '../../routes.js'
+import { getApiPath, MESSAGES_API } from '../routes.js'
 import { prepareHeaders } from './helpers'
 import { selectCurrentChannelId } from './uiSlice.js'
 

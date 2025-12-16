@@ -9,7 +9,7 @@ import { useFormik } from 'formik'
 import { object, string, ref } from 'yup'
 
 import { actions as authActions } from '../store/authSlice.js'
-import { getPath, getApiPath, MAIN_PAGE, SIGNUP_API } from '../../routes.js'
+import { getPath, getApiPath, MAIN_PAGE, SIGNUP_API } from '../routes.js'
 
 const SignupForm = () => {
   const [error, setError] = useState(null)
