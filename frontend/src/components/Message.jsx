@@ -1,7 +1,7 @@
 const Message = ({ message }) => {
-  const { id, username, body } = message
+  const { username, body } = message
   return (
-    <div className="text-break mb-2" key={id}>
+    <div className="text-break mb-2">
       <b>{username}</b>
       {': '}
       {body}

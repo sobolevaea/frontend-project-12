@@ -30,7 +30,7 @@ const Channel = ({ channel }) => {
     </Button>
   )
   return (
-    <li className="nav-item w-100" key={id}>
+    <li className="nav-item w-100">
       {removable && (
         <Dropdown as={ButtonGroup} className="d-flex">
           {button}
