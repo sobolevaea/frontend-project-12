@@ -1,11 +1,11 @@
 import { useEffect, useRef } from 'react'
 import { useSelector } from 'react-redux'
 
-import Chat from './Chat.jsx'
-import ChatForm from './ChatForm.jsx'
-import ChatHeader from './ChatHeader.jsx'
+import Chat from './Chat/Chat.jsx'
+import ChatForm from './Chat/ChatForm.jsx'
+import ChatHeader from './Chat/ChatHeader.jsx'
 import ChannelsList from './ChannelsList.jsx'
-import LoaderWrapper from './LoaderWrapper.jsx'
+import LoaderWrapper from './Loader/LoaderWrapper.jsx'
 import ChannelsHeader from './ChannelsHeader.jsx'
 import { useGetChannels } from '../store/channelsApi.js'
 import { useGetMessages } from '../store/messagesApi.js'
@@ -30,11 +30,7 @@ const MainPage = () => {
 
   useEffect(() => {
     scrollToBottom(messagesBoxRef)
-  }, [messages])
-
-  useEffect(() => {
-    scrollToBottom(messagesBoxRef)
-  }, [currentChannelId])
+  }, [messages, currentChannelId])
 
   useEffect(() => {
     scrollToBottom(channelsBoxRef)

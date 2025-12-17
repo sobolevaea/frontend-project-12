@@ -1,8 +1,8 @@
 import { useSelector } from 'react-redux'
 import { useTranslation } from 'react-i18next'
 
-import { selectCurrentChannel } from '../store/channelsApi.js'
-import { selectCurrentMessages } from '../store/messagesApi'
+import { selectCurrentChannel } from '../../store/channelsApi.js'
+import { selectCurrentMessages } from '../../store/messagesApi.js'
 
 const ChatHeader = () => {
   const { t } = useTranslation()

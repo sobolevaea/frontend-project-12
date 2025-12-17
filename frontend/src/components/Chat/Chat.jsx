@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux'
 
 import Message from './Message.jsx'
-import { selectCurrentMessages } from '../store/messagesApi.js'
+import { selectCurrentMessages } from '../../store/messagesApi.js'
 
 const Chat = ({ messagesBoxRef }) => {
   const currentMessages = useSelector(selectCurrentMessages)

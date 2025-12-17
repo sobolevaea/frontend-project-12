@@ -12,13 +12,13 @@ import resources from './locales/index.js'
 import rollbarConfig from './rollbar.js'
 
 const defaultLanguage = 'ru'
-const state = store.getState(state => state)
-const defaultChannelId = state.ui.defaultId
-
-const ruDictionary = leoProfanity.getDictionary(defaultLanguage)
-leoProfanity.add(ruDictionary)
 
 const initApp = (socket) => {
+  const state = store.getState(state => state)
+  const defaultChannelId = state.ui.defaultId
+  const ruDictionary = leoProfanity.getDictionary(defaultLanguage)
+  leoProfanity.add(ruDictionary)
+
   const listenerNewMessage = (payload) => {
     store.dispatch(
       messagesApi.util.updateQueryData(

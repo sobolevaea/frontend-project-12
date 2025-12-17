@@ -7,6 +7,11 @@ export default {
       notFound: 'Страница не найдена',
       signup: 'Регистрация',
     },
+    images: {
+      enter: 'Войти',
+      signup: 'Регистрация',
+      pageNotFound: 'Страница не найдена',
+    },
     buttons: {
       enter: 'Войти',
       exit: 'Выйти',
@@ -16,6 +21,7 @@ export default {
       enterUsername: 'Имя пользователя',
       enterPassword: 'Пароль',
       confirmPassword: 'Подтвердите пароль',
+      newMessage: 'Новое сообщение',
       enterMessage: 'Введите сообщение...',
       send: 'Отправить',
       cansel: 'Отменить',
@@ -38,6 +44,11 @@ export default {
       add: 'Добавить канал',
       rename: 'Переименовать канал',
       remove: 'Удалить канал',
+    },
+    dropdown: {
+      toggle: 'Управление каналом',
+      rename: 'Переименовать',
+      remove: 'Удалить',
     },
     toasts: {
       add: 'Канал создан',

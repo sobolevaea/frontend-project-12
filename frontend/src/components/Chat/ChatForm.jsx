@@ -6,9 +6,9 @@ import { useTranslation } from 'react-i18next'
 import { ArrowRightSquare } from 'react-bootstrap-icons'
 import { useRef, useEffect } from 'react'
 
-import { selectUser } from '../store/authSlice.js'
-import { useAddMessage } from '../store/messagesApi.js'
-import { selectCurrentChannelId } from '../store/uiSlice.js'
+import { selectUser } from '../../store/authSlice.js'
+import { useAddMessage } from '../../store/messagesApi.js'
+import { selectCurrentChannelId } from '../../store/uiSlice.js'
 
 const ChatForm = () => {
   const username = useSelector(selectUser)
@@ -54,8 +54,8 @@ const ChatForm = () => {
         <input
           ref={inputRef}
           name="body"
-          aria-label="Новое сообщение"
-          placeholder="Введите сообщение..."
+          aria-label={t('buttons.newMessage')}
+          placeholder={t('buttons.enterMessage')}
           className="border-0 p-0 ps-2 form-control"
           onChange={formik.handleChange}
           value={formik.values.body}

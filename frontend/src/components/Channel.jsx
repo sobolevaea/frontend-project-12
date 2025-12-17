@@ -2,12 +2,14 @@ import cn from 'classnames'
 import Dropdown from 'react-bootstrap/Dropdown'
 import Button from 'react-bootstrap/Button'
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
+import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { MODAL_RENAME, MODAL_REMOVE } from '../const.js'
 import { selectCurrentChannelId, setCurrentChannel, setModalConfig } from '../store/uiSlice.js'
 
 const Channel = ({ channel }) => {
+  const { t } = useTranslation()
   const { id, name, removable } = channel
   const currentChannelId = useSelector(selectCurrentChannelId)
   const isCurrent = id === currentChannelId
@@ -35,11 +37,11 @@ const Channel = ({ channel }) => {
         <Dropdown as={ButtonGroup} className="d-flex">
           {button}
           <Dropdown.Toggle split id="dropdown-custom-toggle" variant={isCurrent && 'secondary'} className="flex-grow-0">
-            <span className="visually-hidden">Управление каналом</span>
+            <span className="visually-hidden">{t('dropdown.toggle')}</span>
           </Dropdown.Toggle>
           <Dropdown.Menu>
-            <Dropdown.Item href="#" onClick={() => handleShowRemoveModal({ id, name })}>Удалить</Dropdown.Item>
-            <Dropdown.Item href="#" onClick={() => handleShowRenameModal({ id, name })}>Переименовать</Dropdown.Item>
+            <Dropdown.Item href="#" onClick={() => handleShowRemoveModal({ id, name })}>{t('dropdown.remove')}</Dropdown.Item>
+            <Dropdown.Item href="#" onClick={() => handleShowRenameModal({ id, name })}>{t('dropdown.rename')}</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
       )}

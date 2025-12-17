@@ -8,12 +8,14 @@ import { useFormik } from 'formik'
 import { object, string } from 'yup'
 import { useTranslation } from 'react-i18next'
 
-import { actions as authActions } from '../store/authSlice.js'
-import { getApiPath, getPath, LOGIN_API, MAIN_PAGE } from '../routes.js'
+import { useLogin } from '../../store/authApi.js'
+import { actions as authActions } from '../../store/authSlice.js'
+import { getPath, MAIN_PAGE } from '../../routes.js'
 
 const LoginForm = () => {
   const { t } = useTranslation()
   const [error, setError] = useState(null)
+  const [login, { isLoading }] = useLogin()
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -24,9 +26,8 @@ const LoginForm = () => {
 
   const onSubmit = async (values) => {
     try {
-      const path = getApiPath(LOGIN_API)
-      const response = await axios.post(path, values)
-      const { token, username } = response.data
+      const response = await login(values).unwrap()
+      const {token, username} = response
       localStorage.setItem('token', token)
       localStorage.setItem('username', username)
       dispatch(authActions.login())
