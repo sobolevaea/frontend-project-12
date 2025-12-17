@@ -5,8 +5,8 @@ import ButtonGroup from 'react-bootstrap/ButtonGroup'
 import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { MODAL_RENAME, MODAL_REMOVE } from '../const.js'
-import { selectCurrentChannelId, setCurrentChannel, setModalConfig } from '../store/uiSlice.js'
+import { MODAL_RENAME, MODAL_REMOVE } from '../../const.js'
+import { selectCurrentChannelId, setCurrentChannel, setModalConfig } from '../../store/uiSlice.js'
 
 const Channel = ({ channel }) => {
   const { t } = useTranslation()

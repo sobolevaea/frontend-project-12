@@ -1,5 +1,5 @@
 import Channel from './Channel.jsx'
-import { useGetChannels } from '../store/channelsApi.js'
+import { useGetChannels } from '../../store/channelsApi.js'
 
 const ChannelsList = ({ channelsBoxRef }) => {
   const { data: channels } = useGetChannels()

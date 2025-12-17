@@ -1,6 +1,6 @@
 import cn from 'classnames'
 import axios, { isAxiosError } from 'axios'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
@@ -14,7 +14,7 @@ import { getPath, MAIN_PAGE } from '../../routes.js'
 
 const SignupForm = () => {
   const [error, setError] = useState(null)
-  const [signup, { isLoading }] = useSignup()
+  const [signup] = useSignup()
   const { t } = useTranslation()
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -25,11 +25,8 @@ const SignupForm = () => {
 
   const onSubmit = async (values) => {
     try {
-      const response = await signup(values).unwrap()
-      const { token, username } = response
+      await signup(values).unwrap()
       dispatch(authActions.logout())
-      localStorage.setItem('token', token)
-      localStorage.setItem('username', username)
       dispatch(authActions.login())
       navigate(getPath(MAIN_PAGE))
     }
@@ -70,6 +67,7 @@ const SignupForm = () => {
         <input
           id="username"
           name="username"
+          disabled={formik.isSubmitting}
           className={cn('form-control', {
             'is-invalid':
               (formik.touched.username && formik.errors.username) || error,
@@ -91,6 +89,7 @@ const SignupForm = () => {
           id="password"
           type="password"
           name="password"
+          disabled={formik.isSubmitting}
           aria-describedby="passwordHelpBlock"
           className={cn('form-control', {
             'is-invalid':
@@ -113,6 +112,7 @@ const SignupForm = () => {
           id="confirmPassword"
           type="password"
           name="confirmPassword"
+          disabled={formik.isSubmitting}
           className={cn('form-control', {
             'is-invalid':
               (formik.touched.confirmPassword
@@ -134,7 +134,7 @@ const SignupForm = () => {
         )}
         {error && <div className="invalid-tooltip">{error}</div>}
       </div>
-      <button type="submit" className="w-100 btn btn-outline-primary">
+      <button type="submit" disabled={formik.isSubmitting} className="w-100 btn btn-outline-primary">
         {t('buttons.signup')}
       </button>
     </form>

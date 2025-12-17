@@ -1,5 +1,7 @@
 import { createSlice, createSelector } from '@reduxjs/toolkit'
 
+import authApi from './authApi'
+
 const initialState = {
   username: localStorage.getItem('username') ?? null,
   token: localStorage.getItem('token') ?? null,
@@ -20,6 +22,32 @@ const authSlice = createSlice({
       state.token = localStorage.getItem('token') ?? null
     },
   },
+  extraReducers: (builder) => {
+    builder.addMatcher(
+      authApi.endpoints.login.matchFulfilled,
+      (state, { payload }) => {
+        Object.assign(state, {
+          ...initialState,
+          token: payload.token,
+          username: payload.username,
+        })
+        localStorage.setItem('token', payload.token)
+        localStorage.setItem('username', payload.username)
+      },
+    )
+    builder.addMatcher(
+      authApi.endpoints.signup.matchFulfilled,
+      (state, { payload }) => {
+        Object.assign(state, {
+          ...initialState,
+          token: payload.token,
+          username: payload.username,
+        });
+        localStorage.setItem('token', payload.token)
+        localStorage.setItem('username', payload.username)
+      },
+    )
+  }
 })
 
 export const selectAuth = state => state.auth

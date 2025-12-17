@@ -15,7 +15,8 @@ import { getPath, MAIN_PAGE } from '../../routes.js'
 const LoginForm = () => {
   const { t } = useTranslation()
   const [error, setError] = useState(null)
-  const [login, { isLoading }] = useLogin()
+  const [login] = useLogin()
+  const { isSubmitting } = useFormik
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -26,10 +27,7 @@ const LoginForm = () => {
 
   const onSubmit = async (values) => {
     try {
-      const response = await login(values).unwrap()
-      const {token, username} = response
-      localStorage.setItem('token', token)
-      localStorage.setItem('username', username)
+      await login(values).unwrap()
       dispatch(authActions.login())
       navigate(getPath(MAIN_PAGE))
     }
@@ -61,15 +59,15 @@ const LoginForm = () => {
     <form onSubmit={formik.handleSubmit} className="col-12 col-md-6 mt-3 mt-md-0">
       <h1 className="text-center mb-4">{t('titles.enter')}</h1>
       <div className="form-floating mb-3">
-        <input id="username" type="username" name="username" className={inputClass} onChange={formik.handleChange} value={formik.values.username} required placeholder={t('buttons.enterNickname')} />
+        <input id="username" type="username" name="username" disabled={formik.isSubmitting} className={inputClass} onChange={formik.handleChange} value={formik.values.username} required placeholder={t('buttons.enterNickname')} />
         <label htmlFor="username">{t('buttons.enterNickname')}</label>
       </div>
       <div className="form-floating mb-4">
-        <input id="password" type="password" name="password" className={inputClass} onChange={formik.handleChange} value={formik.values.password} required placeholder={t('buttons.enterPassword')} />
+        <input id="password" type="password" name="password" disabled={formik.isSubmitting} className={inputClass} onChange={formik.handleChange} value={formik.values.password} required placeholder={t('buttons.enterPassword')} />
         <label className="form-label" htmlFor="password">{t('buttons.enterPassword')}</label>
         {error && <div className="invalid-tooltip">{error}</div>}
       </div>
-      <button type="submit" className="w-100 mb-3 btn btn-outline-primary">{t('buttons.enter')}</button>
+      <button type="submit" disabled={formik.isSubmitting} className="w-100 mb-3 btn btn-outline-primary">{t('buttons.enter')}</button>
     </form>
   )
 }

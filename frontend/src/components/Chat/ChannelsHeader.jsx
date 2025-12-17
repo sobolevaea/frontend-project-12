@@ -2,8 +2,8 @@ import { PlusSquare } from 'react-bootstrap-icons'
 import { useDispatch } from 'react-redux'
 import { useTranslation } from 'react-i18next'
 
-import { MODAL_ADD } from '../const.js'
-import { setModalConfig } from '../store/uiSlice.js'
+import { MODAL_ADD } from '../../const.js'
+import { setModalConfig } from '../../store/uiSlice.js'
 
 const ChannelsHeader = () => {
   const dispatch = useDispatch()
