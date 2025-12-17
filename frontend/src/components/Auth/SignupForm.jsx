@@ -1,22 +1,19 @@
 import cn from 'classnames'
-import axios, { isAxiosError } from 'axios'
-import { useEffect, useState } from 'react'
+import { isAxiosError } from 'axios'
+import { useState } from 'react'
 import { toast } from 'react-toastify'
-import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useFormik } from 'formik'
 import { object, string, ref } from 'yup'
 
 import { useSignup } from '../../store/authApi.js'
-import { actions as authActions } from '../../store/authSlice.js'
 import { getPath, MAIN_PAGE } from '../../routes.js'
 
 const SignupForm = () => {
   const [error, setError] = useState(null)
   const [signup] = useSignup()
   const { t } = useTranslation()
-  const dispatch = useDispatch()
   const navigate = useNavigate()
 
   const handleError = (error) => {
@@ -26,8 +23,6 @@ const SignupForm = () => {
   const onSubmit = async (values) => {
     try {
       await signup(values).unwrap()
-      dispatch(authActions.logout())
-      dispatch(authActions.login())
       navigate(getPath(MAIN_PAGE))
     }
     catch (e) {

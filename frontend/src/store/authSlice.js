@@ -42,12 +42,12 @@ const authSlice = createSlice({
           ...initialState,
           token: payload.token,
           username: payload.username,
-        });
+        })
         localStorage.setItem('token', payload.token)
         localStorage.setItem('username', payload.username)
       },
     )
-  }
+  },
 })
 
 export const selectAuth = state => state.auth
